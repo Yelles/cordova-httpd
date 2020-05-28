@@ -972,8 +972,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * dispatch_retain(myExistingQueue);
  * return myExistingQueue;
 **/
+/*
 - (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock;
-
+*/
 /**
  * Called when a socket accepts a connection.
  * Another socket is automatically spawned to handle it.
@@ -990,8 +991,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * Called when a socket connects and is ready for reading and writing.
  * The host parameter will be an IP address, not a DNS name.
 **/
+/*
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port;
-
+*/
 /**
  * Called when a socket has completed reading the requested data into memory.
  * Not called if there is an error.
@@ -1003,8 +1005,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * This would occur if using readToData: or readToLength: methods.
  * It may be used to for things such as updating progress bars.
 **/
+/*
 - (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
-
+*/
 /**
  * Called when a socket has completed writing the requested data. Not called if there is an error.
 **/
@@ -1014,8 +1017,9 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * Called when a socket has written some data, but has not yet completed the entire write.
  * It may be used to for things such as updating progress bars.
 **/
+/*
 - (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
-
+*/
 /**
  * Called if a read operation has reached its timeout without completing.
  * This method allows you to optionally extend the timeout.
@@ -1027,10 +1031,11 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * 
  * Note that this method may be called multiple times for a single read if you return positive numbers.
 **/
+/*
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
                                                                  elapsed:(NSTimeInterval)elapsed
                                                                bytesDone:(NSUInteger)length;
-
+*/
 /**
  * Called if a write operation has reached its timeout without completing.
  * This method allows you to optionally extend the timeout.
@@ -1042,18 +1047,20 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * 
  * Note that this method may be called multiple times for a single write if you return positive numbers.
 **/
+/*
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
                                                                   elapsed:(NSTimeInterval)elapsed
                                                                 bytesDone:(NSUInteger)length;
-
+*/
 /**
  * Conditionally called if the read stream closes, but the write stream may still be writeable.
  * 
  * This delegate method is only called if autoDisconnectOnClosedReadStream has been set to NO.
  * See the discussion on the autoDisconnectOnClosedReadStream method for more information.
 **/
+/*
 - (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock;
-
+*/
 /**
  * Called when a socket disconnects with or without error.
  * 
@@ -1069,6 +1076,7 @@ typedef enum GCDAsyncSocketError GCDAsyncSocketError;
  * If a SSL/TLS negotiation fails (invalid certificate, etc) then the socket will immediately close,
  * and the socketDidDisconnect:withError: delegate method will be called with the specific SSL error code.
 **/
+/*
 - (void)socketDidSecure:(GCDAsyncSocket *)sock;
-
+*/
 @end
