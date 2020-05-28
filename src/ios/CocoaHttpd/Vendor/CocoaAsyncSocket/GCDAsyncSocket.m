@@ -232,6 +232,20 @@ enum GCDAsyncSocketConfig
 	
 	id userData;
 }
+
+// Fix
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port;
+- (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
+- (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
+                                                                 elapsed:(NSTimeInterval)elapsed
+                                                               bytesDone:(NSUInteger)length;
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
+                                                                  elapsed:(NSTimeInterval)elapsed
+                                                                bytesDone:(NSUInteger)length;
+- (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock;
+- (void)socketDidSecure:(GCDAsyncSocket *)sock;
+
 // Accepting
 - (BOOL)doAccept:(int)socketFD;
 
