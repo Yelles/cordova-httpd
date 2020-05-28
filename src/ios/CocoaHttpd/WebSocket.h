@@ -98,7 +98,7 @@
 
 - (void)webSocketDidOpen:(WebSocket *)ws;
 
-- (void)webSocket:(WebSocket *)ws didReceiveMessage:(NSString *)msg;
+- (void)webSocket:(WebSocket *)ws didReceiveGCDMessage:(NSString *)msg;
 
 - (void)webSocketDidClose:(WebSocket *)ws;
 

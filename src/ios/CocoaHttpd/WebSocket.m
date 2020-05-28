@@ -596,9 +596,9 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	// For completeness, you should invoke [super didReceiveMessage:msg] in your method.
 	
 	// Notify delegate
-	if ([delegate respondsToSelector:@selector(webSocket:didReceiveMessage:)])
+	if ([delegate respondsToSelector:@selector(webSocket:didReceiveGCDMessage:)])
 	{
-		[delegate webSocket:self didReceiveMessage:msg];
+		[delegate webSocket:self didReceiveGCDMessage:msg];
 	}
 }
 
