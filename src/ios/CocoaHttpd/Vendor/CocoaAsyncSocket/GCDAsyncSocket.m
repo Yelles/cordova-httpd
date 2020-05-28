@@ -234,8 +234,8 @@ enum GCDAsyncSocketConfig
 }
 
 // Fix
-- (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock;
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port;
+- (dispatch_queue_t)newGCDSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock;
+- (void)socketGCD:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port;
 - (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
 - (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag;
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
@@ -1827,9 +1827,9 @@ enum GCDAsyncSocketConfig
 			
 			dispatch_queue_t childSocketQueue = NULL;
 			
-			if ([theDelegate respondsToSelector:@selector(newSocketQueueForConnectionFromAddress:onSocket:)])
+			if ([theDelegate respondsToSelector:@selector(newGCDSocketQueueForConnectionFromAddress:onSocket:)])
 			{
-				childSocketQueue = [theDelegate newSocketQueueForConnectionFromAddress:childSocketAddress
+				childSocketQueue = [theDelegate newGCDSocketQueueForConnectionFromAddress:childSocketAddress
 				                                                              onSocket:self];
 			}
 			
@@ -2490,7 +2490,7 @@ enum GCDAsyncSocketConfig
 	// There may be configuration options that must be set by the delegate before opening the streams.
 	// The primary example is the kCFStreamNetworkServiceTypeVoIP flag, which only works on an unopened stream.
 	// 
-	// Thus we wait until after the socket:didConnectToHost:port: delegate method has completed.
+	// Thus we wait until after the socketGCD:didConnectToHost:port: delegate method has completed.
 	// This gives the delegate time to properly configure the streams if needed.
 	
 	dispatch_block_t SetupStreamsPart1 = ^{
@@ -2539,7 +2539,7 @@ enum GCDAsyncSocketConfig
 	NSString *host = [self connectedHost];
 	uint16_t port = [self connectedPort];
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(socket:didConnectToHost:port:)])
+	if (delegateQueue && [delegate respondsToSelector:@selector(socketGCD:didConnectToHost:port:)])
 	{
 		SetupStreamsPart1();
 		
@@ -2547,7 +2547,7 @@ enum GCDAsyncSocketConfig
 		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
-			[theDelegate socket:self didConnectToHost:host port:port];
+			[theDelegate socketGCD:self didConnectToHost:host port:port];
 			
 			dispatch_async(socketQueue, ^{ @autoreleasepool {
 				
